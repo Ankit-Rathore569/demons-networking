@@ -1,28 +1,31 @@
-import './App.css';
-import React from 'react';
-import config from './config';
-import io from 'socket.io-client';
-import Paper from '@material-ui/core/Paper';
-import Typography from '@material-ui/core/Typography';
-import './App.css';
+import "./App.css";
+import React from "react";
+import config from "./config";
+import io from "socket.io-client";
+import Paper from "@material-ui/core/Paper";
+import Typography from "@material-ui/core/Typography";
+import "./App.css";
 
 export default class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
       chat: [],
-      content: '',
-      name: '',
-    }
+      content: "",
+      name: "",
+    };
   }
   componentDidMount() {
     this.socket = io(config[process.env.NODE_ENV].endpoint);
-    this.socket.on('init', (msg) => {
+    this.socket.on("init", (msg) => {
       let msgReversed = msg.reverse();
-      this.setstate((state) => ({
-        chat: [...state.chat, ...msgReversed]
-      }), this.scrollToBottom)
-    })
+      this.setstate(
+        (state) => ({
+          chat: [...state.chat, ...msgReversed],
+        }),
+        this.scrollToBottom
+      );
+    });
   }
 
   // Save the message the user is typing in the input field.
@@ -53,7 +56,7 @@ export default class App extends Component {
                   {el.content}
                 </Typography>
               </div>
-            )
+            );
           })}
         </Paper>
         <BottomBar
@@ -63,7 +66,7 @@ export default class App extends Component {
           handleSubmit={this.handleSubmit.bind(this)}
           name={this.state.name}
         />
-      </div >
-    )
+      </div>
+    );
   }
 }
